@@ -3,11 +3,22 @@ from llama_inference import generate_commentary
 from overlay_output import overlay_text, text_to_speech
 import cv2
 
-def process_video(input_video, output_video, frame_interval=10):
+def process_video(input_video, output_video, frame_interval=100):
+    # check if the input video exists
+    try:
+        open(input_video)
+    except FileNotFoundError:
+        print("Input video file not found.")
+        return
+
+    # extract frames from the input video
     frames = extract_frames(input_video, frame_interval)
+    print("Extracted frames from the video.")
+    print("Total frames extracted:", len(frames))
     processed_frames = []
 
     for frame in frames:
+        print("Processing frame... ", len(processed_frames) + 1)
         commentary = generate_commentary(frame)
         print("Generated Commentary:", commentary)
         processed_frame = overlay_text(frame, commentary)
@@ -24,4 +35,4 @@ def process_video(input_video, output_video, frame_interval=10):
     print("Processed video saved as:", output_video)
 
 if __name__ == "__main__":
-    process_video("examples/sample_video.mp4", "examples/output_video.mp4")
+    process_video("/Users/ravinderjilkapally/Downloads/5192157-hd_1920_1080_30fps.mp4", "/Users/ravinderjilkapally/Downloads/5192157-hd_1920_1080_30fps.mp4")
