@@ -1,4 +1,4 @@
-from llamastack import LlamaStack
+from llama_stack_client import LlamaStack
 from transformers import AutoProcessor
 
 processor = AutoProcessor.from_pretrained("meta/llama-3.2-vision")
