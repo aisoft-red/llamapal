@@ -1,0 +1,5 @@
+llamastack
+transformers
+torch
+opencv-python
+pyttsx3
