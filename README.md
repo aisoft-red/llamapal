@@ -10,13 +10,17 @@ LlamaPal is an AI-powered companion that brings live, uplifting commentary to am
 **Personalization:** Adapts commentary to the player's actions and setting.
 **Accessibility:** Designed for casual players, making any game exciting.
 
-## Impact (1 Minute): 
+## Impact 
 “LlamaPal bridges the gap between fitness and fun, encouraging people to get active by making every moment on the court exciting.”
 
 ## Metrics:
 Increase in physical activity by making sports more engaging.
 Boost mental health through social and motivational interactions.
 Enhance community spirit by making amateur sports accessible and fun.
+
+## Storyboard
+ <img width="1000" alt="image" src="https://github.com/user-attachments/assets/6ecc6e8f-54e2-4cc3-8a47-a09bdde599d3">
+
 
 ## Demo
 Here is LlamaPal in action adding commentary to a basketball game.
