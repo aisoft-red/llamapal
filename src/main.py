@@ -6,7 +6,7 @@ import os
 import datetime
 
 
-def process_video(input_video, output_video, frame_interval=50):
+def process_video(input_video, output_video, frame_interval=50, use_groq=False):
     # check if the input video exists
     try:
         open(input_video)
@@ -23,7 +23,7 @@ def process_video(input_video, output_video, frame_interval=50):
 
     for frame in frames:
         print("Processing frame... ", len(processed_frames) + 1)
-        commentary = generate_commentary(frame, all_commentary)
+        commentary = generate_commentary(frame, all_commentary, use_groq)
         all_commentary.append(commentary)
         print("Generated Commentary:", commentary)
         #overlay the commentary on the frame in a 100x100 box at the top left corner adjust the overlay_text function to change the position
@@ -31,7 +31,7 @@ def process_video(input_video, output_video, frame_interval=50):
         processed_frame = overlay_text(frame, commentary)
         processed_frames.append(processed_frame)
         #text_to_speech(commentary)
-        print("Overlayed Commentary on the frame.") 
+        print("Overlayed Commentary on the frame.")
         #save the processed frame
         cv2.imwrite(output_dir+"/processed_frame_" + str(len(processed_frames)) + ".jpg", processed_frame)
         print("Processed frame saved as:", output_dir+"/processed_frame_" + str(len(processed_frames)) + ".jpg")
@@ -52,10 +52,14 @@ def process_video(input_video, output_video, frame_interval=50):
 if __name__ == "__main__":
     now = datetime.datetime.now()
     output_dir = "./data/output/" + now.strftime("%Y-%m-%d_%H-%M-%S")
-      
+
     #make the output directory with a timestamp if it doesn't exist
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
 
-    process_video("./data/input/basketball_one_player.mp4", output_dir + "/basketball_one_player.mp4")
+    process_video(
+        "./data/input/basketball_one_player.mp4",
+        output_dir + "/basketball_one_player.mp4",
+        use_groq=False
+    )
