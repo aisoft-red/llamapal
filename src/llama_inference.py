@@ -1,12 +1,15 @@
-import requests
 from PIL import Image
 import numpy as np
 import ollama
+from groq import Groq
+from dotenv import load_dotenv
+load_dotenv()
+import os
+from encode_image import encode_image
 
-# Ollama local server configuration
 OLLAMA_API_URL = "http://localhost:11434/api"
 
-def generate_commentary(frame, all_commentary):
+def generate_commentary(frame, use_groq=False):
     """
     Sends a video frame to the Ollama API for commentary generation.
 
@@ -28,28 +31,47 @@ def generate_commentary(frame, all_commentary):
 
     # Send the request to the Ollama API
     # Append the all_commentary as a string
-    
+
     content = (
         "Give a 20 word running sports commentary for this image"
-     )
+    )
+    image_filename = 'frame.jpg'
 
-    response = ollama.chat(
+    if use_groq:
+        api_key = os.environ.get("GROQ_API_KEY")
+        messages=[
+            {
+                "role": "user",
+                "content": [
+                    {
+                        "type": "text",
+                        "text": content
+                    },
+                    {
+                        "type": "image_url",
+                        "image_url": {
+                            "url": f"data:image/jpeg;base64,{encode_image(image_filename)}"
+                        }
+                    }
+                ]
+            }
+        ]
+        response = Groq(api_key=api_key).chat.completions.create(
+            model='llama-3.2-11b-vision-preview',
+            messages=messages
+        )
+        current_commentary = response.choices[0].message.content
+    else:
+        current_commentary = ollama.chat(
             model='llama3.2-vision',
             messages=[{
                 'role': 'user',
                 'content': content,
-                'images': ['frame.jpg']
-        }]
-    )
-    current_commentary = response['message']['content']
-    # Send the request to the Ollama API
-    #response = requests.post(OLLAMA_API_URL, json=payload)
-    #update prev_commentary and append it to the prompt
-    #commentary += current_commentary
+                'images': [image_filename]
+            }]
+        ).message.content
 
-    # Check if the request was successful
     return current_commentary
-
 
 # Entry point for testing the function
 if __name__ == "__main__":
