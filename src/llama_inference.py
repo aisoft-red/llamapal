@@ -6,7 +6,7 @@ import ollama
 # Ollama local server configuration
 OLLAMA_API_URL = "http://localhost:11434/api"
 
-def generate_commentary(frame):
+def generate_commentary(frame, all_commentary):
     """
     Sends a video frame to the Ollama API for commentary generation.
 
@@ -25,21 +25,30 @@ def generate_commentary(frame):
         "model": "llama3.2-vision",  # Ensure this matches the exact model name in Ollama
         "prompt": "Describe this sports activity in the frame."
     }
-    response = ollama.chat(
-    model='llama3.2-vision',
-    messages=[{
-        'role': 'user',
-        'content': 'What is in this image?',
-        'images': ['frame.jpg']
-    }]
-)
 
     # Send the request to the Ollama API
+    # Append the all_commentary as a string
+    
+    content = (
+        "Give a 20 word running sports commentary for this image"
+     )
+
+    response = ollama.chat(
+            model='llama3.2-vision',
+            messages=[{
+                'role': 'user',
+                'content': content,
+                'images': ['frame.jpg']
+        }]
+    )
+    current_commentary = response['message']['content']
+    # Send the request to the Ollama API
     #response = requests.post(OLLAMA_API_URL, json=payload)
+    #update prev_commentary and append it to the prompt
+    #commentary += current_commentary
 
     # Check if the request was successful
-    print(response)
-    return response
+    return current_commentary
 
 
 # Entry point for testing the function
