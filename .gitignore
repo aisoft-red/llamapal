@@ -6,6 +6,7 @@ __pycache__/
 /data/output/
 # C extensions
 *.so
+frame.jpg
 
 # Distribution / packaging
 .Python

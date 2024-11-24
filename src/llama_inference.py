@@ -9,7 +9,7 @@ from encode_image import encode_image
 
 OLLAMA_API_URL = "http://localhost:11434/api"
 
-def generate_commentary(frame, use_groq=False):
+def generate_commentary(frame, all_commentary, use_groq=False):
     """
     Sends a video frame to the Ollama API for commentary generation.
 
