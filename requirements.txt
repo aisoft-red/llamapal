@@ -5,3 +5,4 @@ opencv-python
 pyttsx3
 ollama
 groq
+gradio
