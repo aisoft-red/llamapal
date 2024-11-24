@@ -11,9 +11,13 @@ from PIL import Image
 def process_video(input_video, output_video, frame_interval=50, use_groq=False):
     # check if the input video exists
     try:
+        print("Input video file:", input_video)
         open(input_video)
+        #extract the video name from the input video path that ends with mp4
+        video_name = os.path.basename(input_video)
+        print("Video Name:", video_name)
     except FileNotFoundError:
-        print("Input video file not found.")
+        print("Input video file not found. Please check the path:", input_video)
         return
 
     # extract frames from the input video
@@ -35,7 +39,7 @@ def process_video(input_video, output_video, frame_interval=50, use_groq=False):
         #text_to_speech(commentary)
         print("Overlayed Commentary on the frame.")
         #save the processed frame
-        cv2.imwrite(output_dir+"/processed_frame_" + str(len(processed_frames)) + ".jpg", processed_frame)
+        cv2.imwrite(output_dir+ "/" + video_name +"_processed_frame_" + str(len(processed_frames)) + ".jpg", processed_frame)
         print("Processed frame saved as:", output_dir+"/processed_frame_" + str(len(processed_frames)) + ".jpg")
     height, width, _ = processed_frames[0].shape
     out = cv2.VideoWriter(output_video, cv2.VideoWriter_fourcc(*'mp4v'), 30, (width, height))
@@ -56,9 +60,11 @@ def process_video(input_video, output_video, frame_interval=50, use_groq=False):
 def generate_gif_of_processed_frames(output_dir):
     print("Generating GIF of processed frames...")
     #count the number of jpg files in the output directory
-    processed_frames = [f for f in os.listdir(output_dir) if f.startswith("processed_frame_") and f.endswith(".jpg")]
+    processed_frames = [f for f in os.listdir(output_dir) if f.startswith("video") and f.endswith(".jpg")]
+    # print the number of processed frames
+    print("Total available processed frames:", len(processed_frames))
     # filepaths
-    fp_in = output_dir+"/processed_frame_*.jpg"
+    fp_in = output_dir+"/*.jpg"
     fp_out = output_dir+"/processed_frames_image.gif"
 
     # use exit stack to automatically close opened images
@@ -68,6 +74,7 @@ def generate_gif_of_processed_frames(output_dir):
         imgs = (stack.enter_context(Image.open(f))
                 for f in sorted(glob.glob(fp_in)))
 
+        #print the first image
         # extract  first image from iterator
         img = next(imgs)
 
@@ -84,9 +91,13 @@ if __name__ == "__main__":
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
+    #loop and process 4 videos in series that are in the input directory/video_*.mp4
+    for i in range(3):
+        process_video("./data/input/video_" + str(i) + ".mp4", output_dir + "/video_" + str(i) + ".mp4", use_groq=True)
 
+    #process_video("./data/input/basketball_two_players.mp4", output_dir + "/basketball_two_players.mp4", use_groq=True)
     #process_video("./data/input/basketball_one_player.mp4", output_dir + "/basketball_one_player.mp4",  use_groq=True)
 
-    #generate_gif_of_processed_frames("data/output/2024-11-23_21-07-01")
+    #generate_gif_of_processed_frames("data/output/2024-11-23_21-27-17")
     generate_gif_of_processed_frames(output_dir)
 
