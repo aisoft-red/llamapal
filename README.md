@@ -23,7 +23,7 @@ Enhance community spirit by making amateur sports accessible and fun.
 
 
 ## Demo
-Here is LlamaPal in action adding commentary to a basketball game.
+Here is LlamaPal in action adding commentary to a basketball game. Click the link to view the full demo [LlamaPal Demo](https://huggingface.co/spaces/jwplatta/LlamaPalDemo).
 ![Demo](data/demo/processed_frames_image.gif)
 
 ## How It Works
