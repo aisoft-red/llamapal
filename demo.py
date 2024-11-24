@@ -7,20 +7,20 @@ with gr.Blocks(css=css) as demo:
 
     with gr.Row():
         with gr.Column():
-            gr.Markdown("## One on one")
-            gr.Video(
-                value="./data/demo/basketball_one_player.mp4",
-                format="mp4",
-                loop=True,
-                autoplay=True
+            gr.Markdown("## On your own")
+            gr.Image(
+                value="./data/demo/intro.gif",
+                type="filepath",
+                interactive=True,
+                label="Intro"
             )
 
         with gr.Column():
-            gr.Markdown("## With a Pal")
+            gr.Markdown("## With a pal")
             gr.Image(
                 value="./data/demo/processed_frames_image.gif",
                 type="filepath",
-                interactive=False,
+                interactive=True,
                 label="LlamaPal"
             )
 
