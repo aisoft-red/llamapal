@@ -87,6 +87,6 @@ if __name__ == "__main__":
 
     #process_video("./data/input/basketball_one_player.mp4", output_dir + "/basketball_one_player.mp4",  use_groq=True)
 
-    generate_gif_of_processed_frames("data/output/2024-11-23_21-07-01")
-    #generate_gif_of_processed_frames(output_dir)
+    #generate_gif_of_processed_frames("data/output/2024-11-23_21-07-01")
+    generate_gif_of_processed_frames(output_dir)
 
