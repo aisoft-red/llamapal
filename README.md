@@ -4,6 +4,5 @@ LlamaPal is your friendly AI companion for amateur sports. Using LlamaStack, it 
 
 ## Demo
 
-![Intro](data/demo/intro.gif)
-
+Here is LlamaPal in action add commentary to a basketball game:
 ![Demo](data/demo/processed_frames_image.gif)
